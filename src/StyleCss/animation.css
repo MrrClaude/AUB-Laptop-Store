@@ -1,0 +1,56 @@
+.imageReveal{
+    animation: imageReveal 1s both;
+    animation-timeline: view(60% 10%);
+}
+@keyframes imageReveal {
+    from{
+        filter: saturate(0) contrast(4) brightness(.1) blur(5px);
+        opacity: 0;
+        scale: .95;
+        transition: 0 4rem;
+    }
+    to{
+        filter: none;
+        opacity: 1;
+        scale: 1;
+        translate: 0 0;
+    }
+}
+
+.fadeUp{
+    animation: fadeUp 1s both;
+    animation-timeline: view(20% 10%);
+}
+@keyframes fadeUp {
+    from{
+        opacity: 0;
+        transform: translateY(10px) scale(0.5);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 9rem;
+}
+.scroll-wrapper {
+  overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #0306e9 ;
+}
+.transform-hover{
+    transition: transform 0.3s ease;
+}
+.transform-hover:hover{
+    transform: rotate(360deg) scale(1.2);
+}
+.shadow-hover{
+    transition: box-shadow 0.3s ease;
+}   
+.shadow-hover:hover{
+    box-shadow: 0 4px 8px rgba(214, 18, 18, 0.2);
+}
