@@ -71,7 +71,7 @@ const Navbar = () => {
           ${showNavbar ? "translate-y-0" : "-translate-y-full"}
         `}
       >
-        <div className="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between p-4">
+        <div className="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between p-1">
           {/* Logo */}
           <Link
             to="/"
@@ -80,7 +80,7 @@ const Navbar = () => {
           >
             <img src={imgLogo} className="h-20" alt="Logo" />
             <span
-              className={`self-center text-2xl font-bold md:inline ${
+              className={`self-center text-2xl font-bold md:inline hidden  ${
                 theme === "dark" ? "text-indigo-700" : "text-black"
               }`}
             >

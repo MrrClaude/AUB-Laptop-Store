@@ -17,7 +17,7 @@ import Cart from "./pages/Cart";
 const App = () => {
   const { theme } = useContext(ThemeContext);
   return (
-    <div className={`${theme}`}>
+    <div className={`${theme} relative`  }>
       <nav>
         <Navbar />
       </nav>

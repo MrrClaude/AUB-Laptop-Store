@@ -50,6 +50,7 @@ const Accessories = () => {
   const [showBrandDropdown, setShowBrandDropdown] = useState(false);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [selectedUpgrades, setSelectedUpgrades] = useState({});
+  const [validationAlert, setValidationAlert] = useState(null);
   const searchRef = useRef(null);
   const brandRef = useRef(null);
   const categoryRef = useRef(null);
@@ -150,6 +151,18 @@ const Accessories = () => {
   const handleAddToCart = (card) => {
     const upgradesToAdd = selectedUpgrades[card.id] || [];
 
+    // If product has series (upgrades) but none are selected, show validation message
+    if (card.series && Array.isArray(card.series) && card.series.length > 0 && upgradesToAdd.length === 0) {
+      setValidationAlert({
+        productName: card.title,
+        message: "Please select at least one model before adding to cart"
+      });
+      
+      // Clear alert after 3 seconds
+      setTimeout(() => setValidationAlert(null), 3000);
+      return;
+    }
+
     if (upgradesToAdd.length === 0) {
       // No upgrades selected, add base product
       addToCart(card);
@@ -191,6 +204,12 @@ const Accessories = () => {
           {wishlistAlert.type === 'added' 
             ? `✅ Success! "${wishlistAlert.product}" added to wishlist!` 
             : `❌ "${wishlistAlert.product}" removed from wishlist!`}
+        </div>
+      )}
+
+      {validationAlert && (
+        <div className={`fixed top-6 left-1/2 -translate-x-1/2 p-4 text-sm rounded-lg shadow-xl z-50 max-w-sm border font-medium text-amber-900 bg-amber-200 dark:bg-amber-600 dark:text-white border-amber-300 dark:border-amber-500`} role="alert">
+          ⚠️ {validationAlert.message}
         </div>
       )}
       <Carousel />
@@ -462,7 +481,7 @@ const Accessories = () => {
                 {card.series && Array.isArray(card.series) && card.series.length > 0 ? (
                   <div className="mb-4 p-3 rounded-lg bg-gray-50/10 border border-gray-200/20">
                     <p className={`text-xs font-semibold mb-2 ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}>
-                      Available Models:
+                      Please Select Models:
                     </p>
                     <div className="space-y-2">
                       {card.series.map((model, idx) => (
@@ -482,7 +501,7 @@ const Accessories = () => {
                             type="checkbox"
                             checked={selectedUpgrades[card.id]?.includes(idx) || false}
                             onChange={() => toggleUpgradeSelection(card.id, idx)}
-                            className="w-4 h-4 cursor-pointer"
+                            className="w-4 h-4 cursor-pointer rounded-2xl"
                           />
                           <div className="flex-1 text-xs">
                             <p className="font-semibold">{model.about}</p>
